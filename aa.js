@@ -1,9 +1,12 @@
 const gameContainer = document.createElement('div');
 gameContainer.style.position = 'absolute';
-gameContainer.style.width = '1920px';
-gameContainer.style.height = '1080px';
+gameContainer.style.width = '1910px';
+gameContainer.style.height = '1070px';
 gameContainer.style.overflow = 'hidden';
 gameContainer.style.backgroundColor = '#3f1f3c';
+gameContainer.style.border = '4px solid #fff';
+gameContainer.style.borderRadius = '24px';
+gameContainer.style.boxShadow = '0 0 32px 8px #000a, 0 0 0 8px #fff2 inset';
 document.getElementById('game-wrapper').appendChild(gameContainer);
 
 const sprite = document.createElement('img');
@@ -32,6 +35,11 @@ speedDisplay.style.color = 'black';
 speedDisplay.style.fontFamily = 'Arial, sans-serif';
 speedDisplay.style.fontSize = '20px';
 speedDisplay.style.display = 'none';
+speedDisplay.style.background = '#fff8';
+speedDisplay.style.padding = '6px 16px';
+speedDisplay.style.borderRadius = '8px';
+speedDisplay.style.boxShadow = '0 2px 8px #0002';
+speedDisplay.style.fontWeight = 'bold';
 gameContainer.appendChild(speedDisplay);
 
 const counterDisplay = document.createElement('div');
@@ -43,6 +51,11 @@ counterDisplay.style.color = 'black';
 counterDisplay.style.fontFamily = 'Arial, sans-serif';
 counterDisplay.style.fontSize = '24px';
 counterDisplay.style.display = 'none';
+counterDisplay.style.background = '#fff8';
+counterDisplay.style.padding = '6px 16px';
+counterDisplay.style.borderRadius = '8px';
+counterDisplay.style.boxShadow = '0 2px 8px #0002';
+counterDisplay.style.fontWeight = 'bold';
 gameContainer.appendChild(counterDisplay);
 
 const timerDisplay = document.createElement('div');
@@ -54,6 +67,11 @@ timerDisplay.style.fontFamily = 'Arial, sans-serif';
 timerDisplay.style.fontSize = '20px';
 timerDisplay.style.zIndex = '1000';
 timerDisplay.style.display = 'none';
+timerDisplay.style.background = '#fff8';
+timerDisplay.style.padding = '6px 16px';
+timerDisplay.style.borderRadius = '8px';
+timerDisplay.style.boxShadow = '0 2px 8px #0002';
+timerDisplay.style.fontWeight = 'bold';
 gameContainer.appendChild(timerDisplay);
 
 const gameOverImage = document.createElement('img');
@@ -169,7 +187,7 @@ function resetGame() {
 
     speedDisplay.style.display = 'block';
     counterDisplay.style.display = 'block';
-    timerDisplay.style.display = 'block;'
+    timerDisplay.style.display = 'block';
 
     const centerX = gameContainer.clientWidth / 2;
     const centerY = gameContainer.clientHeight / 2;
@@ -198,7 +216,7 @@ startButton.addEventListener('click', resetGame);
 
 const baseSpeed = 120;
 let speed = baseSpeed;
-const frameTime = 1000 / 120; // 24 FPS
+const frameTime = 1000 / 60; // 60 FPS
 
 const keys = {
     w: false,
@@ -260,6 +278,11 @@ const spriteFrames = [
     'src/person3.png',
     'src/person4.png'
 ];
+const spriteImages = spriteFrames.map(src => {
+    const img = new Image();
+    img.src = src;
+    return img;
+});
 let currentFrame = 0;
 
 let distanceWalked = 0;
@@ -271,12 +294,10 @@ let startTime = Date.now();
 
 function animateSprite() {
     if (isMoving) {
-        currentFrame = (currentFrame + 1) % spriteFrames.length;
-        sprite.src = spriteFrames[currentFrame];
+        currentFrame = (currentFrame + 1) % spriteImages.length;
+        sprite.src = spriteImages[currentFrame].src;
     }
 }
-
-setInterval(animateSprite, 500);
 
 function spawnBerry() {
     const maxX = gameContainer.clientWidth - 38; 
@@ -338,6 +359,7 @@ function updateTimer() {
 }
 
 function gameLoop(currentTime) {
+    if (!gameLoopRunning) return;
     const deltaTime = currentTime - lastTime;
     
     if (deltaTime >= frameTime) {
@@ -378,7 +400,7 @@ function gameLoop(currentTime) {
                 distanceWalked = 0;
             }
         } else {
-            sprite.src = spriteFrames[0];
+            sprite.src = spriteImages[0].src;
             distanceWalked = 0;
         }
         
