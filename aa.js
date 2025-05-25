@@ -98,14 +98,14 @@ startButton.style.display = 'block';
 document.body.appendChild(startButton);
 
 const startText = document.createElement('div');
-startText.innerHTML = 'Press Ctrl + "-" till you see game border<br>Collect 10 berries as fast as you can!'; // Use <br> for line break
+startText.innerHTML = 'Press Ctrl + "-" till you see game border<br>Collect 10 berries as fast as you can!<br>Use SHIFT and SPACE to move faster';
 startText.style.position = 'fixed';
-startText.style.top = '56%';
+startText.style.top = '60%';
 startText.style.left = '50%';
 startText.style.transform = 'translate(-50%, -50%)';
 startText.style.color = '#ffffff';
 startText.style.fontFamily = 'Arial, sans-serif';
-startText.style.fontSize = '20px';
+startText.style.fontSize = '30px';
 startText.style.textAlign = 'center';
 startText.style.zIndex = '1002';
 document.body.appendChild(startText);
